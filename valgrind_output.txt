@@ -1,0 +1,293 @@
+==7== Memcheck, a memory error detector
+==7== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==7== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==7== Command: php --no-php-ini -d zend_extension=xdebug.so -d xdebug.collect_params=3 invalid_read_test.php
+==7== 
+Verifying Phockito_Verify_Builder->add
+==7== Invalid read of size 8
+==7==    at 0x9488663: xdebug_var_export (xdebug_var.c:1083)
+==7==    by 0x9488EA6: xdebug_get_zval_value (xdebug_var.c:1212)
+==7==    by 0x948148B: add_single_value (xdebug_stack.c:397)
+==7==    by 0x948148B: xdebug_append_printable_stack (xdebug_stack.c:486)
+==7==    by 0x946D677: xdebug_throw_exception_hook (xdebug.c:1650)
+==7==    by 0x1ED300: zend_throw_exception_internal (in /usr/bin/php7.1)
+==7==    by 0x3DADA7: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x418CCB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x419E3B: ??? (in /usr/bin/php7.1)
+==7==  Address 0x97c6d10 is 16 bytes inside a block of size 4,096 free'd
+==7==    at 0x4C2ED5B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7==    by 0x419CF7: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x418CCB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x419E3B: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x419E3B: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==  Block was alloc'd at
+==7==    at 0x4C2FD4F: realloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7==    by 0x34C6A8: __zend_realloc (in /usr/bin/php7.1)
+==7==    by 0x3B9B3E: smart_str_erealloc (in /usr/bin/php7.1)
+==7==    by 0x2F1555: php_var_export_ex (in /usr/bin/php7.1)
+==7==    by 0x2F0C86: php_var_export_ex (in /usr/bin/php7.1)
+==7==    by 0x2F1830: zif_var_export (in /usr/bin/php7.1)
+==7==    by 0x946F7BC: xdebug_execute_internal (xdebug.c:2208)
+==7==    by 0x4197DB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x418CCB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7== 
+==7== Invalid read of size 8
+==7==    at 0x4C345C0: memmove (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7==    by 0x948869F: memcpy (string3.h:53)
+==7==    by 0x948869F: zend_string_init (zend_string.h:160)
+==7==    by 0x948869F: xdebug_var_export (xdebug_var.c:1083)
+==7==    by 0x9488EA6: xdebug_get_zval_value (xdebug_var.c:1212)
+==7==    by 0x948148B: add_single_value (xdebug_stack.c:397)
+==7==    by 0x948148B: xdebug_append_printable_stack (xdebug_stack.c:486)
+==7==    by 0x946D677: xdebug_throw_exception_hook (xdebug.c:1650)
+==7==    by 0x1ED300: zend_throw_exception_internal (in /usr/bin/php7.1)
+==7==    by 0x3DADA7: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x418CCB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==  Address 0x97c6d18 is 24 bytes inside a block of size 4,096 free'd
+==7==    at 0x4C2ED5B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7==    by 0x419CF7: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x418CCB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x419E3B: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x419E3B: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==  Block was alloc'd at
+==7==    at 0x4C2FD4F: realloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7==    by 0x34C6A8: __zend_realloc (in /usr/bin/php7.1)
+==7==    by 0x3B9B3E: smart_str_erealloc (in /usr/bin/php7.1)
+==7==    by 0x2F1555: php_var_export_ex (in /usr/bin/php7.1)
+==7==    by 0x2F0C86: php_var_export_ex (in /usr/bin/php7.1)
+==7==    by 0x2F1830: zif_var_export (in /usr/bin/php7.1)
+==7==    by 0x946F7BC: xdebug_execute_internal (xdebug.c:2208)
+==7==    by 0x4197DB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x418CCB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7== 
+==7== Invalid read of size 8
+==7==    at 0x4C345CE: memmove (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7==    by 0x948869F: memcpy (string3.h:53)
+==7==    by 0x948869F: zend_string_init (zend_string.h:160)
+==7==    by 0x948869F: xdebug_var_export (xdebug_var.c:1083)
+==7==    by 0x9488EA6: xdebug_get_zval_value (xdebug_var.c:1212)
+==7==    by 0x948148B: add_single_value (xdebug_stack.c:397)
+==7==    by 0x948148B: xdebug_append_printable_stack (xdebug_stack.c:486)
+==7==    by 0x946D677: xdebug_throw_exception_hook (xdebug.c:1650)
+==7==    by 0x1ED300: zend_throw_exception_internal (in /usr/bin/php7.1)
+==7==    by 0x3DADA7: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x418CCB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==  Address 0x97c6d28 is 40 bytes inside a block of size 4,096 free'd
+==7==    at 0x4C2ED5B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7==    by 0x419CF7: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x418CCB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x419E3B: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x419E3B: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==  Block was alloc'd at
+==7==    at 0x4C2FD4F: realloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7==    by 0x34C6A8: __zend_realloc (in /usr/bin/php7.1)
+==7==    by 0x3B9B3E: smart_str_erealloc (in /usr/bin/php7.1)
+==7==    by 0x2F1555: php_var_export_ex (in /usr/bin/php7.1)
+==7==    by 0x2F0C86: php_var_export_ex (in /usr/bin/php7.1)
+==7==    by 0x2F1830: zif_var_export (in /usr/bin/php7.1)
+==7==    by 0x946F7BC: xdebug_execute_internal (xdebug.c:2208)
+==7==    by 0x4197DB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x418CCB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7== 
+==7== Invalid read of size 8
+==7==    at 0x9488730: xdebug_var_export (xdebug_var.c:1098)
+==7==    by 0x9488EA6: xdebug_get_zval_value (xdebug_var.c:1212)
+==7==    by 0x948148B: add_single_value (xdebug_stack.c:397)
+==7==    by 0x948148B: xdebug_append_printable_stack (xdebug_stack.c:486)
+==7==    by 0x946D677: xdebug_throw_exception_hook (xdebug.c:1650)
+==7==    by 0x1ED300: zend_throw_exception_internal (in /usr/bin/php7.1)
+==7==    by 0x3DADA7: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x418CCB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x419E3B: ??? (in /usr/bin/php7.1)
+==7==  Address 0x97c6d10 is 16 bytes inside a block of size 4,096 free'd
+==7==    at 0x4C2ED5B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7==    by 0x419CF7: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x418CCB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x419E3B: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x419E3B: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==  Block was alloc'd at
+==7==    at 0x4C2FD4F: realloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7==    by 0x34C6A8: __zend_realloc (in /usr/bin/php7.1)
+==7==    by 0x3B9B3E: smart_str_erealloc (in /usr/bin/php7.1)
+==7==    by 0x2F1555: php_var_export_ex (in /usr/bin/php7.1)
+==7==    by 0x2F0C86: php_var_export_ex (in /usr/bin/php7.1)
+==7==    by 0x2F1830: zif_var_export (in /usr/bin/php7.1)
+==7==    by 0x946F7BC: xdebug_execute_internal (xdebug.c:2208)
+==7==    by 0x4197DB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x418CCB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7== 
+==7== Invalid read of size 2
+==7==    at 0x4C34618: memmove (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7==    by 0x948869F: memcpy (string3.h:53)
+==7==    by 0x948869F: zend_string_init (zend_string.h:160)
+==7==    by 0x948869F: xdebug_var_export (xdebug_var.c:1083)
+==7==    by 0x9488EA6: xdebug_get_zval_value (xdebug_var.c:1212)
+==7==    by 0x948148B: add_single_value (xdebug_stack.c:397)
+==7==    by 0x948148B: xdebug_append_printable_stack (xdebug_stack.c:486)
+==7==    by 0x946D677: xdebug_throw_exception_hook (xdebug.c:1650)
+==7==    by 0x1ED300: zend_throw_exception_internal (in /usr/bin/php7.1)
+==7==    by 0x3DADA7: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x418CCB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==  Address 0x97cbc38 is 24 bytes inside a block of size 256 free'd
+==7==    at 0x4C2ED5B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7==    by 0x419CF7: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x418CCB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x419E3B: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x419E3B: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==  Block was alloc'd at
+==7==    at 0x4C2DB2F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7==    by 0x34C688: __zend_malloc (in /usr/bin/php7.1)
+==7==    by 0x3B9B9C: smart_str_erealloc (in /usr/bin/php7.1)
+==7==    by 0x2EDC32: ??? (in /usr/bin/php7.1)
+==7==    by 0x2F18F7: php_var_serialize (in /usr/bin/php7.1)
+==7==    by 0x2F1A5D: zif_serialize (in /usr/bin/php7.1)
+==7==    by 0x946F7BC: xdebug_execute_internal (xdebug.c:2208)
+==7==    by 0x4197DB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x418CCB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7== 
+==7== Invalid read of size 2
+==7==    at 0x4C34627: memmove (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7==    by 0x948869F: memcpy (string3.h:53)
+==7==    by 0x948869F: zend_string_init (zend_string.h:160)
+==7==    by 0x948869F: xdebug_var_export (xdebug_var.c:1083)
+==7==    by 0x9488EA6: xdebug_get_zval_value (xdebug_var.c:1212)
+==7==    by 0x948148B: add_single_value (xdebug_stack.c:397)
+==7==    by 0x948148B: xdebug_append_printable_stack (xdebug_stack.c:486)
+==7==    by 0x946D677: xdebug_throw_exception_hook (xdebug.c:1650)
+==7==    by 0x1ED300: zend_throw_exception_internal (in /usr/bin/php7.1)
+==7==    by 0x3DADA7: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x418CCB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==  Address 0x97cbc3c is 28 bytes inside a block of size 256 free'd
+==7==    at 0x4C2ED5B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7==    by 0x419CF7: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x418CCB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x419E3B: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x419E3B: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==  Block was alloc'd at
+==7==    at 0x4C2DB2F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7==    by 0x34C688: __zend_malloc (in /usr/bin/php7.1)
+==7==    by 0x3B9B9C: smart_str_erealloc (in /usr/bin/php7.1)
+==7==    by 0x2EDC32: ??? (in /usr/bin/php7.1)
+==7==    by 0x2F18F7: php_var_serialize (in /usr/bin/php7.1)
+==7==    by 0x2F1A5D: zif_serialize (in /usr/bin/php7.1)
+==7==    by 0x946F7BC: xdebug_execute_internal (xdebug.c:2208)
+==7==    by 0x4197DB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7==    by 0x946ECF5: xdebug_execute_ex (xdebug.c:2056)
+==7==    by 0x418CCB: ??? (in /usr/bin/php7.1)
+==7==    by 0x3C0ADA: execute_ex (in /usr/bin/php7.1)
+==7== 
+
+Fatal error: Uncaught Exception: Failed asserting that method add was called 1 times - actually called 0 times.
+Wanted call:
+Calls:
+ in /invalid_read_test.php on line 4200
+
+Exception: Failed asserting that method add was called 1 times - actually called 0 times.
+Wanted call:
+Calls:
+ in /invalid_read_test.php on line 4200
+
+Call Stack:
+    0.3095          0   1. {main}() /invalid_read_test.php:0
+    0.3175          0   2. foo() /invalid_read_test.php:4231
+    0.3250          0   3. Test->outer() /invalid_read_test.php:4229
+    0.3932          0   4. Phockito_VerifyBuilder->add('add', array (0 => class PHPUnit\Framework\Constraint\IsAnything { protected $exporter = class SebastianBergmann\Exporter\Exporter { ... } }, 1 => class PHPUnit\Framework\Constraint\IsAnything { protected $exporter = class SebastianBergmann\Exporter\Exporter { ... } }, 2 => class PHPUnit\Framework\Constraint\IsAnything { protected $exporter = class SebastianBergmann\Exporter\Exporter { ... } }, 3 => class PHPUnit\Framework\Constraint\IsAnything { protected $exporter = class SebastianBergmann\Exporter\Exporter { ... } }, 4 => 1500, 5 => 3000, 6 => class PHPUnit\Framework\Constraint\IsAnything { protected $exporter = class SebastianBergmann\Exporter\Exporter { ... } }, 7 => 'P', 8 => 3, 9 => class PHPUnit\Framework\Constraint\IsAnything { protected $exporter = class SebastianBergmann\Exporter\Exporter { ... } }, 10 => class PHPUnit\Framework\Constraint\IsAnything { protected $exporter = class SebastianBergmann\Exporter\Exporter { ... } }, 11 => 'U', 12 => class PHPUnit\Framework\Constraint\IsAnything { protected $exporter = class SebastianBergmann\Exporter\Exporter { ... } }, 13 => class PHPUnit\Framework\Constraint\IsAnything { protected $exporter = class SebastianBergmann\Exporter\Exporter { ... } }, 14 => 0), 0, *uninitialized*, array (), 'Failed asserting that method add was called 1 times - actually called 0 times.\nWanted call:\nCalls:\n', 'array (\n  0 => \n  PHPUnit\\Framework\\Constraint\\IsAnything::__set_state(array(\n     \'exporter\' => \n    SebastianBergmann\\Exporter\\Exporter::__set_state(array(\n    )),\n  )),\n  1 => \n  PHPUnit\\Framework\\Constraint\\IsAnything::__set_state(array(\n     \'exporter\' => \n    SebastianBergmann\\Exporter\\Exporter::__set_state(array(\n    )),\n  )),\n  2 => \n  PHPUnit\\Framework\\Constraint\\IsAnything::__set_state(array(\n     \'exporter\' => \n    SebastianBergmann\\Exporter\\Exporter::__set_st...', array (), 'a:0:{}', class PHPUnit\Framework\Constraint\IsAnything { protected $exporter = class SebastianBergmann\Exporter\Exporter {  } }, class PHPUnit\Framework\Constraint\IsAnything { protected $exporter = class SebastianBergmann\Exporter\Exporter {  } }, 'U', array (), array (), 0) /invalid_read_test.php:4223
+    0.3951          0   5. Phockito_VerifyBuilder->__call('add', array (0 => class PHPUnit\Framework\Constraint\IsAnything { protected $exporter = class SebastianBergmann\Exporter\Exporter { ... } }, 1 => class PHPUnit\Framework\Constraint\IsAnything { protected $exporter = class SebastianBergmann\Exporter\Exporter { ... } }, 2 => class PHPUnit\Framework\Constraint\IsAnything { protected $exporter = class SebastianBergmann\Exporter\Exporter { ... } }, 3 => class PHPUnit\Framework\Constraint\IsAnything { protected $exporter = class SebastianBergmann\Exporter\Exporter { ... } }, 4 => 1500, 5 => 3000, 6 => class PHPUnit\Framework\Constraint\IsAnything { protected $exporter = class SebastianBergmann\Exporter\Exporter { ... } }, 7 => 'P', 8 => 3, 9 => class PHPUnit\Framework\Constraint\IsAnything { protected $exporter = class SebastianBergmann\Exporter\Exporter { ... } }, 10 => class PHPUnit\Framework\Constraint\IsAnything { protected $exporter = class SebastianBergmann\Exporter\Exporter { ... } }, 11 => 'U', 12 => class PHPUnit\Framework\Constraint\IsAnything { protected $exporter = class SebastianBergmann\Exporter\Exporter { ... } }, 13 => class PHPUnit\Framework\Constraint\IsAnything { protected $exporter = class SebastianBergmann\Exporter\Exporter { ... } }, 14 => 0)) /invalid_read_test.php:4223
+
+==7== 
+==7== HEAP SUMMARY:
+==7==     in use at exit: 9,664 bytes in 31 blocks
+==7==   total heap usage: 24,408 allocs, 24,377 frees, 4,015,579 bytes allocated
+==7== 
+==7== LEAK SUMMARY:
+==7==    definitely lost: 866 bytes in 4 blocks
+==7==    indirectly lost: 4,376 bytes in 5 blocks
+==7==      possibly lost: 3,296 bytes in 1 blocks
+==7==    still reachable: 1,126 bytes in 21 blocks
+==7==         suppressed: 0 bytes in 0 blocks
+==7== Rerun with --leak-check=full to see details of leaked memory
+==7== 
+==7== For counts of detected and suppressed errors, rerun with: -v
+==7== ERROR SUMMARY: 202 errors from 6 contexts (suppressed: 0 from 0)
