@@ -348,44 +348,15 @@ interface Phockito_MockMarker {
  */
 class Phockito_VerifyBuilder {
 
-	protected $class;
-	protected $instance;
-	protected $times;
-
 	function __construct($class, $instance, $times) {
-		$this->class = $class;
-		$this->instance = $instance;
-		$this->times = $times;
 	}
 
 	function __call($called, $args) {
         // The p
-        printf("Verifying Phockito_Verify_Builder->%s\n", $called, var_export($args, true), serialize(Phockito::$_call_list));
+        printf("Verifying Phockito_Verify_Builder->%s\n", var_export($args, true));
         flush();
-		$count = 0;
 
-		// TODO: SplObjectStorage to speed up large number of assertions? Or use spl_object_hash() and method()?
-		foreach (Phockito::$_call_list as $call) {
-			if ($call['instance'] == $this->instance && $call['method'] == $called && Phockito::_arguments_match($this->class, $called, $args, $call['args'])) {
-				$count++;
-			}
-		}
-
-		if (preg_match('/([0-9]+)\+/', $this->times, $match)) {
-			if ($count >= (int)$match[1]) return;
-		}
-		else {
-			if ($count == $this->times) return;
-		}
-
-		$message  = "Failed asserting that method $called was called {$this->times} times - actually called $count times.\n";
-		$message .= "Wanted call:\n";
-
-		$message .= "Calls:\n";
-
-        //unset($exporter);  // testing workaround
-
-		throw new \Exception($message);
+		throw new \Exception('x');  // undef variable
 	}
 }
 use PHPUnit\Framework\Assert;
