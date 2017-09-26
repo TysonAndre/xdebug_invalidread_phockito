@@ -533,14 +533,6 @@ class Phockito {
 	public static $_is_interface = array();
 
 	/**
-	 * Checks if the two argument sets (passed as arrays) match. Simple serialized check for now, to be replaced by
-	 * something that can handle anyString etc matchers later
-	 */
-	public static function _arguments_match($mockclass, $method, $a, $b) {
-		return true;
-	}
-
-	/**
 	 * Called by the mock instances when a method is called. Records the call and returns a response if one has been
 	 * stubbed in
 	 */
@@ -557,11 +549,9 @@ class Phockito {
 		if (isset(self::$_responses[$instance][$method])) {
 			// Find the first one that matches the called-with arguments
 			foreach (self::$_responses[$instance][$method] as $i => &$matcher) {
-				if (self::_arguments_match($class, $method, $matcher['args'], $args)) {
-					// Consume the next response - except the last one, which repeats indefinitely
-					if (count($matcher['steps']) > 1) return array_shift($matcher['steps']);
-					else return reset($matcher['steps']);
-				}
+                // Consume the next response - except the last one, which repeats indefinitely
+                if (count($matcher['steps']) > 1) return array_shift($matcher['steps']);
+                else return reset($matcher['steps']);
 			}
 		}
 	}
