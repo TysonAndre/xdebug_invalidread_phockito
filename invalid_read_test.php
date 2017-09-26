@@ -8,25 +8,14 @@
 
 
 
-/*
- * This file is part of PHPUnit.
- *
- * (c) Sebastian Bergmann <sebastian@phpunit.de>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace PHPUnit\Framework\Constraint {
 
-use PHPUnit\Framework\ExpectationFailedException;
-use SebastianBergmann\Comparator\ComparisonFailure;
 use SebastianBergmann\Exporter\Exporter;
 
 /**
- * Abstract base class for constraints which can be applied to any value.
+ * Constraint that accepts any input value.
  */
-abstract class Constraint
+class IsAnything
 {
     protected $exporter;
 
@@ -44,89 +33,13 @@ abstract class Constraint
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace PHPUnit\Framework\Constraint {
-
-use PHPUnit\Framework\ExpectationFailedException;
-
-/**
- * Constraint that accepts any input value.
- */
-class IsAnything extends Constraint
-{
-}
-}
-/*
- * This file is part of PHPUnit.
- *
- * (c) Sebastian Bergmann <sebastian@phpunit.de>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
-namespace PHPUnit\Framework {
-
-use PHPUnit\Framework\Constraint\IsAnything;
-
-/**
- * A set of assertion methods.
- */
-abstract class Assert
-{
-    /**
-     * @return IsAnything
-     */
-    public static function anything()
-    {
-        return new IsAnything;
-    }
-}
-}
 
 namespace SebastianBergmann\Exporter {
 
-/*
- * This file is part of the exporter package.
- *
- * (c) Sebastian Bergmann <sebastian@phpunit.de>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 use SebastianBergmann\RecursionContext\Context;
 
-/**
- * A nifty utility for visualizing PHP variables.
- *
- * <code>
- * <?php
- * use SebastianBergmann\Exporter\Exporter;
- *
- * $exporter = new Exporter;
- * print $exporter->export(new Exception);
- * </code>
- */
 class Exporter
 {
-    /**
-     * Exports a value as a string
-     *
-     * The output of this method is similar to the output of print_r(), but
-     * improved in various aspects:
-     *
-     *  - NULL is rendered as "null" (instead of "")
-     *  - TRUE is rendered as "true" (instead of "1")
-     *  - FALSE is rendered as "false" (instead of "")
-     *  - Strings are always quoted with single quotes
-     *  - Carriage returns and newlines are normalized to \n
-     *  - Recursion and repeated rendering is treated properly
-     *
-     * @param mixed $value
-     * @param int   $indentation The indentation level of the 2nd+ line
-     *
-     * @return string
-     */
     public function export($value, $indentation = 0)
     {
         return $this->recursiveExport($value, $indentation);
@@ -709,6 +622,7 @@ class Phockito_VerifyBuilder {
 	}
 }
 use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\Constraint\IsAnything;
 /**
  * Returns a PHPUnit\Framework\Constraint\IsAnything matcher object.
  *
@@ -716,7 +630,7 @@ use PHPUnit\Framework\Assert;
  */
 function anything()
 {
-    return Assert::anything();
+    return new IsAnything();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
