@@ -108,16 +108,7 @@ abstract class Constraint implements Countable, SelfDescribing
      */
     protected function fail($other, $description, ComparisonFailure $comparisonFailure = null)
     {
-        $failureDescription = \sprintf(
-            'Failed asserting that %s.',
-            $this->failureDescription($other)
-        );
-
-        $additionalFailureDescription = $this->additionalFailureDescription($other);
-
-        if ($additionalFailureDescription) {
-            $failureDescription .= "\n" . $additionalFailureDescription;
-        }
+        $failureDescription = 'x';
 
         if (!empty($description)) {
             $failureDescription = $description . "\n" . $failureDescription;
@@ -127,39 +118,6 @@ abstract class Constraint implements Countable, SelfDescribing
             $failureDescription,
             $comparisonFailure
         );
-    }
-
-    /**
-     * Return additional failure description where needed
-     *
-     * The function can be overridden to provide additional failure
-     * information like a diff
-     *
-     * @param mixed $other Evaluated value or object.
-     *
-     * @return string
-     */
-    protected function additionalFailureDescription($other)
-    {
-        return '';
-    }
-
-    /**
-     * Returns the description of the failure
-     *
-     * The beginning of failure messages is "Failed asserting that" in most
-     * cases. This method should return the second part of that sentence.
-     *
-     * To provide additional failure information additionalFailureDescription
-     * can be used.
-     *
-     * @param mixed $other Evaluated value or object.
-     *
-     * @return string
-     */
-    protected function failureDescription($other)
-    {
-        return $this->exporter->export($other) . ' ' . $this->toString();
     }
 }
 }
@@ -3905,42 +3863,14 @@ EOT;
 	 * @param string $class - The class to mock
 	 * @return string - The class that acts as a Phockito mock of the passed class
 	 */
-	static function mock_class(string $class) : string {
+	static function mock(string $class) {
 		$mockClass = self::build_test_double(false, $class);
 
 		// If we've been given a type registrar, call it (we need to do this even if class exists, since PHPUnit resets globals, possibly de-registering between tests)
 		$type_registrar = self::$type_registrar;
 		if ($type_registrar) $type_registrar::register_double($mockClass, $class, self::$_is_interface[$class]);
 
-		return $mockClass;
-	}
-
-	/**
-	 * Aternative name for mock_instance
-	 * @return object - A mock of that class
-	 */
-	static function mock(string $class) {
-		$mockClass = self::mock_class($class);
 		return new $mockClass();
-	}
-	/**
-	 * When builder. Starts stubbing the method called to build the argument passed to when
-	 *
-	 * @static
-	 * @return Phockito_WhenBuilder
-	 */
-	static function when($arg = null) {
-		if ($arg instanceof Phockito_MockMarker) {
-			return new Phockito_WhenBuilder($arg->__phockito_instanceid);
-		}
-		else {
-			if (count(self::$_call_list) === 0) {
-				$type = is_object($arg) ? get_class($arg) : gettype($arg);
-				throw new InvalidArgumentException("No recent calls to Phockito mocks to pass to when. Probably called Phockito::when(\$mock->foo()), but \$mock is from a different mocking framework. Argument to Phockito::when was of type " . $type);
-			}
-			$method = array_shift(self::$_call_list);
-			return new Phockito_WhenBuilder($method['instance'], $method['method'], $method['args']);
-		}
 	}
 
 	/**
