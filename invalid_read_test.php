@@ -34,89 +34,6 @@ abstract class Constraint
     {
         $this->exporter = new Exporter;
     }
-
-    /**
-     * Evaluates the constraint for parameter $other
-     *
-     * If $returnResult is set to false (the default), an exception is thrown
-     * in case of a failure. null is returned otherwise.
-     *
-     * If $returnResult is true, the result of the evaluation is returned as
-     * a boolean value instead: true in case of success, false in case of a
-     * failure.
-     *
-     * @param mixed  $other        Value or object to evaluate.
-     * @param string $description  Additional information about the test
-     * @param bool   $returnResult Whether to return a result or throw an exception
-     *
-     * @return mixed
-     *
-     * @throws ExpectationFailedException
-     */
-    public function evaluate($other, $description = '', $returnResult = false)
-    {
-        $success = false;
-
-        if ($this->matches($other)) {
-            $success = true;
-        }
-
-        if ($returnResult) {
-            return $success;
-        }
-
-        if (!$success) {
-            $this->fail($other, $description);
-        }
-    }
-
-    /**
-     * Evaluates the constraint for parameter $other. Returns true if the
-     * constraint is met, false otherwise.
-     *
-     * This method can be overridden to implement the evaluation algorithm.
-     *
-     * @param mixed $other Value or object to evaluate.
-     *
-     * @return bool
-     */
-    protected function matches($other)
-    {
-        return false;
-    }
-
-    /**
-     * Counts the number of constraint elements.
-     *
-     * @return int
-     */
-    public function count()
-    {
-        return 1;
-    }
-
-    /**
-     * Throws an exception for the given compared value and test description
-     *
-     * @param mixed             $other             Evaluated value or object.
-     * @param string            $description       Additional information about the test
-     * @param ComparisonFailure $comparisonFailure
-     *
-     * @throws ExpectationFailedException
-     */
-    protected function fail($other, $description, ComparisonFailure $comparisonFailure = null)
-    {
-        $failureDescription = 'x';
-
-        if (!empty($description)) {
-            $failureDescription = $description . "\n" . $failureDescription;
-        }
-
-        throw new ExpectationFailedException(
-            $failureDescription,
-            $comparisonFailure
-        );
-    }
 }
 }
 /*
@@ -705,40 +622,6 @@ EOT;
 	 */
 	private static function _get_type_hint_of_parameter(ReflectionParameter $parameter) {
 		return self::_reflection_type_to_declaration($parameter->getType());
-	}
-
-	/**
-	 * @param ReflectionParameter[] $parameters
-	 * @return string a command to initialize $args in an eval()ed mock.
-	 */
-	private static function _create_array_from_func_args(array $parameters) : string {
-		$hasReferences = false;
-		foreach ($parameters as $param) {
-			if ($param->isPassedByReference()) {
-				$hasReferences = true;
-			}
-		}
-		if (!$hasReferences) {
-			return "	\$args = func_get_args();\n";
-		}
-		$contents = "	\$args = [];\n";
-		foreach ($parameters as $param) {
-			$varName = '$' . $param->getName();
-			if ($param->isVariadic()) {
-				$contents .= "	foreach ($varName as \$__var) { \$args[] = \$__var; };\n";
-			} else if ($param->isPassedByReference()) {
-				$contents .= "	\$args[] = &$varName;\n";
-			} else {
-				$contents .= "	\$args[] = $varName;\n";
-			}
-		}
-		$contents .= <<<EOT
-	\$args = array_slice(\$args, 0, func_num_args());  // ignore default or variadic params
-	for (\$__i = count(\$args); \$__i < func_num_args(); \$__i++) {
-	  \$args[] = func_get_arg(\$__i);
-	}
-EOT;
-		return $contents;
 	}
 
 	/**
