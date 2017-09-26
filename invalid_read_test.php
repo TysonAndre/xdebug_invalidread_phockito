@@ -19,16 +19,14 @@
 
 namespace PHPUnit\Framework\Constraint {
 
-use Countable;
 use PHPUnit\Framework\ExpectationFailedException;
-use PHPUnit\Framework\SelfDescribing;
 use SebastianBergmann\Comparator\ComparisonFailure;
 use SebastianBergmann\Exporter\Exporter;
 
 /**
  * Abstract base class for constraints which can be applied to any value.
  */
-abstract class Constraint implements Countable, SelfDescribing
+abstract class Constraint
 {
     protected $exporter;
 
@@ -138,72 +136,6 @@ use PHPUnit\Framework\ExpectationFailedException;
  */
 class IsAnything extends Constraint
 {
-    /**
-     * Evaluates the constraint for parameter $other
-     *
-     * If $returnResult is set to false (the default), an exception is thrown
-     * in case of a failure. null is returned otherwise.
-     *
-     * If $returnResult is true, the result of the evaluation is returned as
-     * a boolean value instead: true in case of success, false in case of a
-     * failure.
-     *
-     * @param mixed  $other        Value or object to evaluate.
-     * @param string $description  Additional information about the test
-     * @param bool   $returnResult Whether to return a result or throw an exception
-     *
-     * @return mixed
-     *
-     * @throws ExpectationFailedException
-     */
-    public function evaluate($other, $description = '', $returnResult = false)
-    {
-        return $returnResult ? true : null;
-    }
-
-    /**
-     * Returns a string representation of the constraint.
-     *
-     * @return string
-     */
-    public function toString()
-    {
-        return 'is anything';
-    }
-
-    /**
-     * Counts the number of constraint elements.
-     *
-     * @return int
-     */
-    public function count()
-    {
-        return 0;
-    }
-}
-}
-/*
- * This file is part of PHPUnit.
- *
- * (c) Sebastian Bergmann <sebastian@phpunit.de>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
-namespace PHPUnit\Framework {
-
-/**
- * Interface for classes that can return a description of itself.
- */
-interface SelfDescribing
-{
-    /**
-     * Returns a string representation of the object.
-     *
-     * @return string
-     */
-    public function toString();
 }
 }
 /*
@@ -718,117 +650,6 @@ EOT;
 		// Track if the mocked class defines either of the __call and/or __toString magic methods
 		$has__call = $has__toString = false;
 		$has__call_type = '';
-
-		// Step through every method declared on the object
-		foreach ($reflect->getMethods() as $method) {
-			// Skip private methods. They shouldn't ever be called anyway
-			if ($method->isPrivate()) continue;
-
-			// Either skip or throw error on final methods.
-			if ($method->isFinal()) {
-				if (self::$ignore_finals) continue;
-				else user_error("Class $mockedClass has final method {$method->name}, which we can\'t mock", E_USER_WARNING);
-			}
-
-			// Get the modifiers for the function as a string (static, public, etc) - ignore abstract though, all mock methods are concrete
-			$modifiers = implode(' ', Reflection::getModifierNames($method->getModifiers() & ~(ReflectionMethod::IS_ABSTRACT)));
-
-			// See if the method is return byRef
-			$byRef = $method->returnsReference() ? "&" : "";
-
-			// PHP fragment that is the arguments definition for this method
-			$defparams = array(); $callparams = array();
-
-			// Array of defaults (sparse numeric)
-			self::$_defaults[$mockedClass][$method->name] = array();
-
-			foreach ($method->getParameters() as $i => $parameter) {
-				// Turn the method arguments into a php fragment that calls a function with them
-				$callparams[] = '$'.$parameter->getName();
-
-				// Get the (optional) type hint of the parameter (with space padding on the right)
-				$typeRaw = self::_get_type_hint_of_parameter($parameter);
-				$type = $typeRaw ? "$typeRaw " : "";
-
-				// Check if the parameter is variadic - it is possible there is a type hint before this token
-				// NOTE: isOptional() can be true while isDefaultValueAvailable from isDefaultValueAvailable in php 7.1
-				$hasDefault = ($parameter->isOptional() || $parameter->isDefaultValueAvailable()) && !$parameter->isVariadic();
-
-				try {
-					$defaultValue = $parameter->getDefaultValue();
-				}
-				catch (ReflectionException $e) {
-					$defaultValue = null;
-				}
-
-				// Turn the method arguments into a php fragment the defines a function with them, including possibly the by-reference "&" and any default
-				$defparams[] =
-					$type .
-					($parameter->isVariadic() ? '...' : '') .
-					($parameter->isPassedByReference() ? '&' : '') .
-					'$'.$parameter->getName() .
-					($hasDefault ? '=' . var_export($defaultValue, true) : '')
-				;
-
-				// Finally cache the default value for matching against later
-				if ($parameter->isOptional()) self::$_defaults[$mockedClass][$method->name][$i] = $defaultValue;
-			}
-
-			// Turn that array into a comma seperated list
-			$defparams = implode(', ', $defparams); $callparams = implode(', ', $callparams);
-
-			// Need to have a method signature with the same return type in order to create a subclass. This will limit what can be returned by a mock.
-			// At runtime, an Error will be thrown (e.g. if no return value is mocked for a function with a return type of array)
-			$returnType = self::_get_return_type($method);
-			$defReturn = $returnType ? " : $returnType " : "";
-
-			// What to do if there's no stubbed response
-			if ($partial && !$method->isAbstract()) {
-				$failover = "call_user_func_array(array($mockedClassString, '{$method->name}'), \$args)";
-			}
-			else {
-				$failover = "null";
-			}
-
-			// Constructor is handled specially. For spies, we do call the parent's constructor. For mocks we ignore
-			if ($method->name == '__construct') {
-				if ($partial) {
-					$php[] = <<<EOT
-  function __phockito_parent_construct( $defparams ){
-	parent::__construct( $callparams );
-  }
-EOT;
-				}
-			}
-			elseif ($method->name == '__call') {
-				$has__call = true;
-				if ($method->getNumberOfParameters() >= 2 && $method->getParameters()[1]->isArray()) {
-					$has__call_type = 'array';
-				}
-			}
-			elseif ($method->name == '__toString') {
-				$has__toString = true;
-			}
-			// Build an overriding method that calls Phockito::__called, and never calls the parent
-			else {
-				$initArgsStatements = self::_create_array_from_func_args($method->getParameters());
-				$returnResultStatement = $returnType !== 'void' ? 'return $result;' : 'return;';
-				$php[] = <<<EOT
-  $modifiers function $byRef {$method->name}( $defparams )$defReturn{
-	// Usually \$args = func_get_args();, but special case for references
-	$initArgsStatements
-
-	\$backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-	\$instance = \$backtrace[0]['type'] == '::' ? ('::'.$mockedClassString) : \$this->__phockito_instanceid;
-
-	\$response = {$phockito}::__called($mockedClassString, \$instance, '{$method->name}', \$args);
-
-	\$result = \$response ? {$phockito}::__perform_response(\$response, \$args) : ($failover);
-	$returnResultStatement
-  }
-EOT;
-			}
-		}
 
 		// Always add a __call method to catch any calls to undefined functions
 		$failover = ($partial && $has__call) ? "parent::__call(\$name, \$args)" : "null";
