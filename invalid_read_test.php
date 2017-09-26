@@ -3861,7 +3861,7 @@ EOT;
 	 * of the passed class name. Probably not useful by itself until we start supporting static method stubbing
 	 *
 	 * @param string $class - The class to mock
-	 * @return string - The class that acts as a Phockito mock of the passed class
+	 * @return object - The class that acts as a Phockito mock of the passed class
 	 */
 	static function mock(string $class) {
 		$mockClass = self::build_test_double(false, $class);
@@ -3900,8 +3900,6 @@ interface Phockito_MockMarker {
  */
 class Phockito_VerifyBuilder {
 
-	static $exception_class = 'Exception';
-
 	protected $class;
 	protected $instance;
 	protected $times;
@@ -3911,9 +3909,6 @@ class Phockito_VerifyBuilder {
 		$this->instance = $instance;
 		$this->times = $times;
 	}
-
-    private function printargs($called, $args) {
-    }
 
 	function __call($called, $args) {
         // The p
